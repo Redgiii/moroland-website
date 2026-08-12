@@ -283,7 +283,13 @@ function setupServerStatus() {
     // fois la réponse de l'API arrivée) — sinon la classe "is-loading"
     // n'est jamais retirée et le bouton tourne indéfiniment.
     refreshButton.classList.add("is-loading");
-    fetchServerStatus().finally(() => {
+
+    // La réponse de l'API arrive souvent en moins d'une demi-seconde,
+    // trop vite pour voir la rotation. On affiche l'animation au moins
+    // 600ms, même si la réponse est plus rapide que ça.
+    const minimumDelay = new Promise((resolve) => setTimeout(resolve, 600));
+
+    Promise.all([fetchServerStatus(), minimumDelay]).finally(() => {
       refreshButton.classList.remove("is-loading");
     });
   });
