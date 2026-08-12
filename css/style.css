@@ -295,7 +295,11 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .status-label { font-weight: 600; }
 .status-refresh {
-  padding: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   color: var(--text-muted);
   transition: color 0.15s ease, transform 0.4s ease, background 0.15s ease;
