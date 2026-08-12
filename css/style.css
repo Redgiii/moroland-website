@@ -21,6 +21,15 @@
   --accent-light: #8fc4ff;
   --accent-dark: #2c58b8;
 
+  /* Accents secondaires, un par "famille" du site : magie, aventure,
+     cosy/communauté, galerie. Utilisés pour les halos, badges et
+     bordures colorées afin de donner plus de vie et de repères visuels. */
+  --accent-purple: #a78bfa;
+  --accent-purple-light: #c4b5fd;
+  --accent-pink: #f472b6;
+  --accent-gold: #fbbf82;
+  --accent-gold-light: #fcd9b0;
+
   /* États du statut serveur */
   --ok: #4ade80;
   --off: #f87171;
@@ -99,11 +108,14 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   white-space: nowrap;
 }
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  background: linear-gradient(120deg, var(--accent-light), var(--accent) 55%, var(--accent-purple));
   color: #071021;
-  box-shadow: 0 8px 24px -8px rgba(79, 140, 255, 0.6);
+  box-shadow: 0 8px 22px -8px rgba(79, 140, 255, 0.55), 0 4px 18px -6px rgba(167, 139, 250, 0.45);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(79, 140, 255, 0.75); }
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 28px -8px rgba(79, 140, 255, 0.65), 0 8px 24px -8px rgba(167, 139, 250, 0.55);
+}
 .btn-ghost {
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
@@ -178,22 +190,37 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .hero-glow {
   position: absolute;
   inset: -20% -10% auto -10%;
-  height: 600px;
+  height: 650px;
   background:
-    radial-gradient(45% 55% at 30% 20%, rgba(79, 140, 255, 0.28), transparent 70%),
-    radial-gradient(35% 45% at 75% 30%, rgba(143, 196, 255, 0.16), transparent 70%);
+    radial-gradient(40% 55% at 22% 15%, rgba(79, 140, 255, 0.32), transparent 70%),
+    radial-gradient(34% 46% at 78% 12%, rgba(167, 139, 250, 0.24), transparent 70%),
+    radial-gradient(30% 40% at 55% 45%, rgba(244, 114, 182, 0.15), transparent 70%),
+    radial-gradient(26% 34% at 12% 60%, rgba(251, 191, 130, 0.13), transparent 70%);
   filter: blur(10px);
   pointer-events: none;
 }
 .hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
 .eyebrow {
+  display: inline-block;
   color: var(--accent-light);
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.8rem;
-  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  font-weight: 700;
   margin-bottom: 16px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(79, 140, 255, 0.12);
+  border: 1px solid rgba(79, 140, 255, 0.28);
 }
+
+/* Chaque section a sa propre couleur de badge, assortie au halo qui
+   flotte derrière elle : ça crée un repère de couleur par thématique
+   (magie = violet, aventure = vert, galerie = rose, communauté/avis = or). */
+#univers .eyebrow { color: var(--accent-purple-light); background: rgba(167, 139, 250, 0.14); border-color: rgba(167, 139, 250, 0.32); }
+#actes .eyebrow, #actualites .eyebrow { color: #86efac; background: rgba(74, 222, 128, 0.12); border-color: rgba(74, 222, 128, 0.3); }
+#galerie .eyebrow { color: var(--accent-pink); background: rgba(244, 114, 182, 0.12); border-color: rgba(244, 114, 182, 0.3); }
+#temoignages .eyebrow, #communaute .eyebrow, #faq .eyebrow { color: var(--accent-gold); background: rgba(251, 191, 130, 0.14); border-color: rgba(251, 191, 130, 0.32); }
 .hero-title {
   font-size: clamp(2.8rem, 7vw, 5.2rem);
   line-height: 1;
@@ -248,8 +275,37 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .recruitment-badge[data-status="closed"]::before { background: var(--text-faint); }
 
 /* ---------- Sections génériques ---------- */
-.section { padding: 110px 0; }
+.section { position: relative; padding: 110px 0; overflow: hidden; }
 .section-alt { background: var(--bg-alt); }
+.section > .container { position: relative; z-index: 1; }
+
+/* Halo coloré flottant derrière chaque section : purement décoratif,
+   la couleur reprend celle du badge de la section pour rester cohérent. */
+.section::before {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+  animation: float-glow 14s ease-in-out infinite alternate;
+}
+#univers::before { background: var(--accent-purple); top: -140px; right: -120px; }
+#actes::before { background: var(--ok); top: 15%; left: -160px; animation-delay: -3s; }
+#actualites::before { background: var(--accent); bottom: -120px; right: 5%; animation-delay: -7s; }
+#galerie::before { background: var(--accent-pink); top: -100px; left: 25%; animation-delay: -2s; }
+#temoignages::before { background: var(--accent-gold); bottom: -120px; left: -140px; animation-delay: -5s; }
+#communaute::before { background: var(--accent-gold); top: -120px; right: -100px; animation-delay: -9s; }
+#faq::before { background: var(--accent-purple); bottom: -140px; right: -80px; animation-delay: -4s; }
+
+@keyframes float-glow {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(30px, -24px) scale(1.1); }
+}
+
 .section-title {
   font-size: clamp(1.9rem, 3.4vw, 2.6rem);
   margin: 4px 0 18px;
@@ -369,13 +425,33 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   gap: 22px;
 }
 .mod-card {
+  position: relative;
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 26px;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  --card-accent: var(--accent-light);
 }
-.mod-card:hover { transform: translateY(-4px); border-color: var(--accent-light); }
+.mod-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent);
+}
+.mod-card[data-category="tech"] { --card-accent: var(--accent-light); }
+.mod-card[data-category="magic"] { --card-accent: var(--accent-purple); }
+.mod-card[data-category="adventure"] { --card-accent: var(--ok); }
+.mod-card[data-category="cosy"] { --card-accent: var(--accent-gold); }
+.mod-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-accent);
+  box-shadow: 0 18px 36px -22px var(--card-accent);
+}
 .mod-card h3 { font-size: 1.15rem; margin: 12px 0 10px; }
 .mod-card p { color: var(--text-muted); font-size: 0.94rem; }
 .mod-tag {
@@ -461,7 +537,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .act-progress-bar {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  background: linear-gradient(90deg, var(--accent), var(--accent-purple));
 }
 .act-progress-label {
   display: block;
@@ -509,7 +585,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   overflow: hidden;
   transition: border-color 0.15s ease;
 }
-.screenshot-placeholder:hover { border-color: var(--accent-light); }
+.screenshot-placeholder:hover { border-color: var(--accent-pink); }
 .screenshot-placeholder img {
   width: 100%;
   height: 100%;
@@ -547,12 +623,25 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   gap: 22px;
 }
 .testimonial-card {
+  position: relative;
+  overflow: hidden;
   margin: 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 26px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent-pink));
+}
+.testimonial-card:hover { transform: translateY(-4px); border-color: var(--accent-gold); }
 .testimonial-card p {
   font-size: 1rem;
   color: var(--text);
