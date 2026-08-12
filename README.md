@@ -64,7 +64,9 @@ const CONFIG = {
   (les liens peuvent expirer), remplace-la ici, elle se met à jour partout sur le site automatiquement.
 - **`MODPACK_URL`** : **à toi de remplir**. C'est le lien vers la page CurseForge ou Modrinth qui liste
   tous les mods du modpack. Ce lien alimente automatiquement le bouton « Voir le modpack » et le bouton
-  « Copier le lien » dans la section « L'univers ».
+  « Copier le lien » dans la section « L'univers ». Tant que tu ne l'as pas remplacé (valeur par défaut
+  contenant `TON-MODPACK`), le site affiche un bouton désactivé « Lien à venir » plutôt qu'un lien mort
+  qui renverrait vers une page inexistante.
 - **`RECRUITMENT_STATUS`** : `"open"` ou `"closed"`. Contrôle le badge « Candidatures ouvertes » /
   « Complet pour le moment » affiché sous les boutons Discord (hero et section Communauté). Change
   juste cette valeur selon la situation, le reste du site se met à jour tout seul.
@@ -94,6 +96,27 @@ qui s'affiche quand tu partages l'URL du site. Deux choses à faire une fois le 
   temps en temps mettre à jour cette section, c'est ce qui donne une raison de revisiter le site.
 - **Compteur de membres** : dans la section Communauté, la ligne `<p class="member-count">12 aventuriers
   actuellement sur Moroland</p>` est à mettre à jour à la main selon le nombre réel de joueurs actifs.
+
+### Progression de l'Acte en cours
+
+Dans la section **Les Actes** (`id="actes"`), l'Acte marqué « En cours » a une petite barre de
+progression (`class="act-progress"`). Pour changer le pourcentage affiché, modifie les deux endroits
+suivants dans `index.html` (cherche `act-progress`) :
+```html
+<div class="act-progress" role="progressbar" aria-valuenow="60" ...>
+  <div class="act-progress-bar" style="width: 60%;"></div>
+</div>
+<span class="act-progress-label">60 % complété</span>
+```
+Remplace les trois `60` par le nouveau pourcentage. Quand tu passes à l'Acte suivant, déplace ce bloc
+dans le nouvel Acte "En cours".
+
+### Galerie et zoom
+
+Les captures d'écran de la section Galerie s'agrandissent déjà au clic (une « lightbox »). Avec les
+emplacements réservés actuels, ça n'affiche que le texte en plus grand — une fois que tu auras remplacé
+les `<button class="screenshot-placeholder">` par de vraies images (voir plus haut), le zoom affichera
+automatiquement la photo en grand, sans rien à changer dans le code JavaScript.
 
 ### Page d'erreur 404
 
@@ -135,9 +158,13 @@ Dans `index.html`, section **Galerie** (cherche `id="galerie"`) :
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen></iframe>
   ```
-- Chaque `<div class="screenshot-placeholder">...</div>` est à remplacer par une vraie image :
+- Chaque capture d'écran est un bouton `<button class="screenshot-placeholder reveal js-lightbox">` qui
+  contient un `<span>Capture d'écran 1</span>`. Pour mettre une vraie image, remplace uniquement le
+  `<span>...</span>` à l'intérieur (garde le `<button>` autour, c'est lui qui permet le zoom au clic) :
   ```html
-  <img src="assets/images/screenshot-1.jpg" alt="Description de la capture d'écran">
+  <button type="button" class="screenshot-placeholder reveal js-lightbox">
+    <img src="assets/images/screenshot-1.jpg" alt="Description de la capture d'écran">
+  </button>
   ```
   Dépose tes fichiers dans `assets/images/` et adapte les noms.
 

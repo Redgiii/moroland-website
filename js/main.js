@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setupServerStatus();
   setupRecruitmentBadge();
   setupBackToTop();
+  setupModFilter();
+  setupShareButton();
+  setupLightbox();
 });
 
 /* ----------------------------------------------------------
@@ -111,11 +114,26 @@ function setupModpackLink() {
   const copyButton = document.getElementById("modpack-copy-btn");
   const feedback = document.getElementById("modpack-copied");
 
-  link.href = CONFIG.MODPACK_URL;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
+  // Tant que MODPACK_URL n'a pas été remplacé par la vraie page (dans
+  // config.js), on évite d'afficher un lien mort : le bouton devient
+  // inactif avec un texte clair, plutôt que de renvoyer vers une 404.
+  const isConfigured = !CONFIG.MODPACK_URL.includes("TON-MODPACK");
+
+  if (isConfigured) {
+    link.href = CONFIG.MODPACK_URL;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  } else {
+    link.textContent = "Lien à venir";
+    link.removeAttribute("href");
+    link.setAttribute("aria-disabled", "true");
+    link.classList.add("is-disabled");
+    copyButton.disabled = true;
+    copyButton.classList.add("is-disabled");
+  }
 
   copyButton.addEventListener("click", () => {
+    if (!isConfigured) return;
     copyToClipboard(CONFIG.MODPACK_URL, feedback, "Lien copié");
   });
 }
@@ -146,6 +164,92 @@ function setupBackToTop() {
 
   button.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+/* ----------------------------------------------------------
+   4quinquies. Filtre de la grille de mods (Tous / Magie /
+   Technologie / Aventure).
+---------------------------------------------------------- */
+function setupModFilter() {
+  const buttons = document.querySelectorAll(".mod-filter");
+  const cards = document.querySelectorAll(".mod-card");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((b) => b.classList.remove("is-active"));
+      button.classList.add("is-active");
+
+      const filter = button.dataset.filter;
+      cards.forEach((card) => {
+        const matches = filter === "all" || card.dataset.category === filter;
+        card.classList.toggle("is-hidden", !matches);
+      });
+    });
+  });
+}
+
+/* ----------------------------------------------------------
+   4sexies. Bouton "Partager le site" : utilise le menu de
+   partage natif du téléphone s'il existe, sinon copie le lien.
+---------------------------------------------------------- */
+function setupShareButton() {
+  const button = document.getElementById("share-btn");
+  const feedback = document.getElementById("share-copied");
+
+  button.addEventListener("click", async () => {
+    const shareData = {
+      title: "Moroland",
+      text: "Découvre Moroland, un serveur Minecraft moddé (magie, technologie, aventure).",
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        // L'utilisateur a annulé le partage : rien à faire.
+      }
+    } else {
+      copyToClipboard(window.location.href, feedback, "Lien copié");
+    }
+  });
+}
+
+/* ----------------------------------------------------------
+   4septies. Lightbox : agrandit une capture d'écran au clic.
+   Fonctionne dès maintenant avec les emplacements réservés, et
+   affichera automatiquement l'image une fois de vraies photos
+   ajoutées (voir README, section Galerie).
+---------------------------------------------------------- */
+function setupLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const content = document.getElementById("lightbox-content");
+  const closeButton = document.getElementById("lightbox-close");
+
+  function open(sourceEl) {
+    const img = sourceEl.querySelector("img");
+    content.innerHTML = img ? img.outerHTML : sourceEl.innerHTML;
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+  }
+
+  function close() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    content.innerHTML = "";
+  }
+
+  document.querySelectorAll(".js-lightbox").forEach((el) => {
+    el.addEventListener("click", () => open(el));
+  });
+
+  closeButton.addEventListener("click", close);
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) close();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") close();
   });
 }
 
@@ -208,6 +312,7 @@ async function fetchServerStatus() {
         // sous forme de <span style="color:..."> prêts à afficher.
         motdHtml: data.motd?.html?.join("<br>") || "",
         motdText: data.motd?.clean?.join(" ") || "",
+        version: data.version || "",
       });
     } else {
       renderStatus(card, { state: "offline", label: "Hors ligne" });
@@ -218,13 +323,14 @@ async function fetchServerStatus() {
   }
 }
 
-function renderStatus(card, { state, label, playersOnline, playersMax, motdHtml, motdText }) {
+function renderStatus(card, { state, label, playersOnline, playersMax, motdHtml, motdText, version }) {
   card.dataset.state = state;
   document.getElementById("status-label").textContent = label;
 
   const countEl = document.getElementById("status-players-count");
   const motdEl = document.getElementById("status-motd");
   const updatedEl = document.getElementById("status-updated");
+  const versionEl = document.getElementById("status-version");
 
   if (state === "online") {
     countEl.textContent = `${playersOnline} / ${playersMax}`;
@@ -236,9 +342,11 @@ function renderStatus(card, { state, label, playersOnline, playersMax, motdHtml,
     } else {
       motdEl.textContent = motdText;
     }
+    versionEl.textContent = version ? `Version ${version}` : "";
   } else {
     countEl.textContent = "—";
     motdEl.textContent = "Le serveur ne répond pas pour le moment.";
+    versionEl.textContent = "";
   }
 
   const now = new Date();
