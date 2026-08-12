@@ -52,7 +52,6 @@ Tout se passe dans **`js/config.js`** pour l'essentiel :
 const CONFIG = {
   SERVER_ADDRESS: "moroland.one-mc.com",
   DISCORD_INVITE: "https://discord.gg/d7SeB8Ppyc",
-  MODPACK_URL: "https://www.curseforge.com/minecraft/modpacks/TON-MODPACK",
   RECRUITMENT_STATUS: "open",
 };
 ```
@@ -62,11 +61,6 @@ const CONFIG = {
   tu n'as rien à ajouter). Si un jour l'adresse ou le port changent, modifie uniquement cette ligne.
 - **`DISCORD_INVITE`** : déjà réglé sur ton lien. Si tu régénères une invitation Discord plus tard
   (les liens peuvent expirer), remplace-la ici, elle se met à jour partout sur le site automatiquement.
-- **`MODPACK_URL`** : **à toi de remplir**. C'est le lien vers la page CurseForge ou Modrinth qui liste
-  tous les mods du modpack. Ce lien alimente automatiquement le bouton « Voir le modpack » et le bouton
-  « Copier le lien » dans la section « L'univers ». Tant que tu ne l'as pas remplacé (valeur par défaut
-  contenant `TON-MODPACK`), le site affiche un bouton désactivé « Lien à venir » plutôt qu'un lien mort
-  qui renverrait vers une page inexistante.
 - **`RECRUITMENT_STATUS`** : `"open"` ou `"closed"`. Contrôle le badge « Candidatures ouvertes » /
   « Complet pour le moment » affiché sous les boutons Discord (hero et section Communauté). Change
   juste cette valeur selon la situation, le reste du site se met à jour tout seul.

@@ -15,10 +15,6 @@ const CONFIG = {
   // sur le site : bouton du menu, bannière, pied de page...)
   DISCORD_INVITE: "https://discord.gg/d7SeB8Ppyc",
 
-  // Lien vers la page du modpack (CurseForge ou Modrinth) qui liste
-  // tous les mods installés. Remplace par l'URL réelle de ta page.
-  MODPACK_URL: "https://www.curseforge.com/minecraft/modpacks/TON-MODPACK",
-
   // Statut des candidatures, affiché en badge à côté du bouton Discord.
   // Change juste cette valeur entre "open" et "closed" selon la situation :
   // "open"   -> badge vert "Candidatures ouvertes"

@@ -408,9 +408,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .modpack-cta h3 { font-size: 1.1rem; margin-bottom: 6px; }
 .modpack-cta p { color: var(--text-muted); font-size: 0.92rem; max-width: 480px; }
 .modpack-cta-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.modpack-cta-actions .status-address { background: var(--surface-2); }
-.modpack-cta-actions .status-address span { font-size: 0.88rem; font-weight: 600; }
-.modpack-cta-actions .is-disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
 
 /* ---------- Les Actes (timeline) ---------- */
 .acts-timeline {

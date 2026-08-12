@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupMobileNav();
   setupRevealOnScroll();
   setupAddressCopy();
-  setupModpackLink();
   setupServerStatus();
   setupRecruitmentBadge();
   setupBackToTop();
@@ -102,39 +101,6 @@ function setupAddressCopy() {
 
   button.addEventListener("click", () => {
     copyToClipboard(CONFIG.SERVER_ADDRESS, feedback, "Adresse copiée");
-  });
-}
-
-/* ----------------------------------------------------------
-   4bis. Lien vers la page du modpack (bouton "Voir le modpack"
-   + bouton "Copier le lien"), toujours à partir de config.js.
----------------------------------------------------------- */
-function setupModpackLink() {
-  const link = document.getElementById("modpack-link");
-  const copyButton = document.getElementById("modpack-copy-btn");
-  const feedback = document.getElementById("modpack-copied");
-
-  // Tant que MODPACK_URL n'a pas été remplacé par la vraie page (dans
-  // config.js), on évite d'afficher un lien mort : le bouton devient
-  // inactif avec un texte clair, plutôt que de renvoyer vers une 404.
-  const isConfigured = !CONFIG.MODPACK_URL.includes("TON-MODPACK");
-
-  if (isConfigured) {
-    link.href = CONFIG.MODPACK_URL;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-  } else {
-    link.textContent = "Lien à venir";
-    link.removeAttribute("href");
-    link.setAttribute("aria-disabled", "true");
-    link.classList.add("is-disabled");
-    copyButton.disabled = true;
-    copyButton.classList.add("is-disabled");
-  }
-
-  copyButton.addEventListener("click", () => {
-    if (!isConfigured) return;
-    copyToClipboard(CONFIG.MODPACK_URL, feedback, "Lien copié");
   });
 }
 
