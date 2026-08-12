@@ -16,6 +16,7 @@ de la complexité sans bénéfice réel.
 ```
 moroland-website/
 ├── index.html          → la page (structure et texte)
+├── 404.html               → page d'erreur affichée par Netlify pour les liens cassés
 ├── css/style.css        → l'apparence (couleurs, mise en page, responsive)
 ├── js/config.js         → LE fichier à modifier (adresse serveur + lien Discord)
 ├── js/main.js            → le comportement (statut live, menu mobile, animations)
@@ -75,13 +76,29 @@ qui s'affiche quand tu partages l'URL du site. Deux choses à faire une fois le 
 
 1. La balise `<meta property="og:url" content="...">` doit toujours pointer vers l'adresse réelle du
    site (actuellement `https://reliable-dieffenbachia-4ee07e.netlify.app/`). Si tu renommes le site sur
-   Netlify ou que tu branches un nom de domaine à toi, pense à la mettre à jour ici.
+   Netlify ou que tu branches un nom de domaine à toi, pense à la mettre à jour ici — et fais la même
+   mise à jour dans le bloc `<script type="application/ld+json">` juste au-dessus (champs `"url"` et
+   `"logo"`), qui sert à aider Google à comprendre le site.
 2. L'image utilisée est `assets/images/og-image.svg`, un visuel généré automatiquement pour que
    l'aperçu ne soit pas vide. Discord l'affiche correctement, **mais Twitter/X n'affiche pas les
    images au format SVG** dans ses cartes. Si tu veux un aperçu qui fonctionne partout : fais une
    capture d'écran ou une image 1200×630 (par exemple avec le logo et le titre), enregistre-la en
    `assets/images/og-image.jpg`, puis remplace `og-image.svg` par `og-image.jpg` dans les 2 balises
    `content="assets/images/og-image.svg"` du `<head>`.
+
+### Actualités et compteur de membres
+
+- Section **Actualités** (`id="actualites"`, entre Les Actes et la Galerie) : 3 entrées d'exemple
+  (marquées « Exemple — à remplacer ») avec une date et une courte description. Ajoute, retire ou
+  modifie les `<li class="news-item">` selon les nouvelles réelles du serveur — pense à revenir de
+  temps en temps mettre à jour cette section, c'est ce qui donne une raison de revisiter le site.
+- **Compteur de membres** : dans la section Communauté, la ligne `<p class="member-count">12 aventuriers
+  actuellement sur Moroland</p>` est à mettre à jour à la main selon le nombre réel de joueurs actifs.
+
+### Page d'erreur 404
+
+Le fichier `404.html` (à la racine) s'affiche automatiquement sur Netlify si quelqu'un arrive sur une
+URL qui n'existe pas. Il reprend le style du site ; rien à faire, sauf si tu veux personnaliser le texte.
 
 ### Témoignages
 
