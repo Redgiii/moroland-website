@@ -275,10 +275,16 @@ function setupServerStatus() {
   fetchServerStatus();
   setInterval(fetchServerStatus, STATUS_REFRESH_INTERVAL_MS);
 
-  document.getElementById("status-refresh").addEventListener("click", (event) => {
-    event.currentTarget.classList.add("is-loading");
+  const refreshButton = document.getElementById("status-refresh");
+  refreshButton.addEventListener("click", () => {
+    // On garde une référence directe au bouton : "event.currentTarget" est
+    // remis à null par le navigateur une fois le clic terminé, donc il ne
+    // faut pas s'y fier dans le ".finally()" qui s'exécute plus tard (une
+    // fois la réponse de l'API arrivée) — sinon la classe "is-loading"
+    // n'est jamais retirée et le bouton tourne indéfiniment.
+    refreshButton.classList.add("is-loading");
     fetchServerStatus().finally(() => {
-      event.currentTarget.classList.remove("is-loading");
+      refreshButton.classList.remove("is-loading");
     });
   });
 }
