@@ -21,6 +21,8 @@ moroland-website/
 ├── js/main.js            → le comportement (statut live, menu mobile, animations)
 ├── assets/images/logo.svg → logo provisoire (à remplacer par le tien)
 ├── assets/images/og-image.svg → visuel utilisé pour l'aperçu de lien (Discord/Twitter)
+├── robots.txt            → autorise les moteurs de recherche à indexer le site
+├── sitemap.xml           → liste des pages du site, pour aider Google à l'indexer
 └── README.md
 ```
 
@@ -50,6 +52,7 @@ const CONFIG = {
   SERVER_ADDRESS: "moroland.one-mc.com",
   DISCORD_INVITE: "https://discord.gg/d7SeB8Ppyc",
   MODPACK_URL: "https://www.curseforge.com/minecraft/modpacks/TON-MODPACK",
+  RECRUITMENT_STATUS: "open",
 };
 ```
 
@@ -61,6 +64,9 @@ const CONFIG = {
 - **`MODPACK_URL`** : **à toi de remplir**. C'est le lien vers la page CurseForge ou Modrinth qui liste
   tous les mods du modpack. Ce lien alimente automatiquement le bouton « Voir le modpack » et le bouton
   « Copier le lien » dans la section « L'univers ».
+- **`RECRUITMENT_STATUS`** : `"open"` ou `"closed"`. Contrôle le badge « Candidatures ouvertes » /
+  « Complet pour le moment » affiché sous les boutons Discord (hero et section Communauté). Change
+  juste cette valeur selon la situation, le reste du site se met à jour tout seul.
 
 ### L'aperçu de lien (Discord / Twitter)
 

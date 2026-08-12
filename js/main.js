@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAddressCopy();
   setupModpackLink();
   setupServerStatus();
+  setupRecruitmentBadge();
+  setupBackToTop();
 });
 
 /* ----------------------------------------------------------
@@ -115,6 +117,35 @@ function setupModpackLink() {
 
   copyButton.addEventListener("click", () => {
     copyToClipboard(CONFIG.MODPACK_URL, feedback, "Lien copié");
+  });
+}
+
+/* ----------------------------------------------------------
+   4ter. Badge "Candidatures ouvertes / complet", basé sur
+   CONFIG.RECRUITMENT_STATUS ("open" ou "closed").
+---------------------------------------------------------- */
+function setupRecruitmentBadge() {
+  const isOpen = CONFIG.RECRUITMENT_STATUS !== "closed";
+
+  document.querySelectorAll(".js-recruitment-badge").forEach((badge) => {
+    badge.dataset.status = isOpen ? "open" : "closed";
+    badge.textContent = isOpen ? "Candidatures ouvertes" : "Complet pour le moment";
+  });
+}
+
+/* ----------------------------------------------------------
+   4quater. Bouton "retour en haut", visible seulement après
+   avoir un peu défilé la page.
+---------------------------------------------------------- */
+function setupBackToTop() {
+  const button = document.getElementById("back-to-top");
+
+  window.addEventListener("scroll", () => {
+    button.classList.toggle("is-visible", window.scrollY > 600);
+  });
+
+  button.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
