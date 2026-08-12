@@ -67,8 +67,9 @@ const CONFIG = {
 Dans `index.html`, tout en haut (`<head>`), les balises `og:*` et `twitter:*` contrôlent la carte
 qui s'affiche quand tu partages l'URL du site. Deux choses à faire une fois le site publié :
 
-1. Remplace `<meta property="og:url" content="https://moroland.netlify.app/">` par la vraie adresse
-   de ton site (celle que Netlify t'aura donnée, ou ton domaine si tu en achètes un).
+1. La balise `<meta property="og:url" content="...">` doit toujours pointer vers l'adresse réelle du
+   site (actuellement `https://reliable-dieffenbachia-4ee07e.netlify.app/`). Si tu renommes le site sur
+   Netlify ou que tu branches un nom de domaine à toi, pense à la mettre à jour ici.
 2. L'image utilisée est `assets/images/og-image.svg`, un visuel généré automatiquement pour que
    l'aperçu ne soit pas vide. Discord l'affiche correctement, **mais Twitter/X n'affiche pas les
    images au format SVG** dans ses cartes. Si tu veux un aperçu qui fonctionne partout : fais une
