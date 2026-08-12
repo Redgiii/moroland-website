@@ -390,6 +390,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .mod-tag-tech { background: rgba(79, 140, 255, 0.16); color: var(--accent-light); }
 .mod-tag-magic { background: rgba(167, 139, 250, 0.16); color: #c4b5fd; }
 .mod-tag-adventure { background: rgba(74, 222, 128, 0.14); color: #86efac; }
+.mod-tag-cosy { background: rgba(251, 191, 130, 0.16); color: #fbbf82; }
 
 /* ---------- Modpack CTA (dans "L'univers") ---------- */
 .modpack-cta {
