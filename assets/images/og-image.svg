@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Moroland">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1220"/>
+      <stop offset="100%" stop-color="#070b14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#4f8cff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4f8cff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#8fc4ff"/>
+      <stop offset="100%" stop-color="#4f8cff"/>
+    </linearGradient>
+    <linearGradient id="mlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8fc4ff"/>
+      <stop offset="100%" stop-color="#3b6fe0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Blason / logo -->
+  <g transform="translate(560,90) scale(0.9)">
+    <path d="M60 4 L112 26 V64 C112 92 90 110 60 116 C30 110 8 92 8 64 V26 Z"
+          fill="none" stroke="url(#mlGrad)" stroke-width="4"/>
+    <path d="M32 82 V40 L60 68 L88 40 V82" fill="none" stroke="url(#mlGrad)"
+          stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="24" r="4.5" fill="#8fc4ff"/>
+  </g>
+
+  <text x="600" y="330" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="96" letter-spacing="6" fill="url(#titleGrad)">MOROLAND</text>
+
+  <text x="600" y="390" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="26" letter-spacing="2" fill="#9aa6c4">Serveur Minecraft moddé — Magie · Technologie · Aventure</text>
+
+  <text x="600" y="560" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="18" letter-spacing="4" fill="#4f8cff">MINECRAFT JAVA 1.20.1</text>
+</svg>

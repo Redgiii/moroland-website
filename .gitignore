@@ -1,0 +1,4 @@
+# Fichiers système à ne jamais suivre dans le dépôt
+.DS_Store
+Thumbs.db
+desktop.ini

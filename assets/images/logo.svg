@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Logo Moroland">
+  <defs>
+    <linearGradient id="mlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8fc4ff"/>
+      <stop offset="100%" stop-color="#3b6fe0"/>
+    </linearGradient>
+  </defs>
+  <!-- Contour en forme de blason, simple et lisible en petit format -->
+  <path d="M60 4 L112 26 V64 C112 92 90 110 60 116 C30 110 8 92 8 64 V26 Z"
+        fill="none" stroke="url(#mlGrad)" stroke-width="4"/>
+  <!-- Lettre M stylisee -->
+  <path d="M32 82 V40 L60 68 L88 40 V82" fill="none" stroke="url(#mlGrad)"
+        stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Point de rune (petit accent magique) -->
+  <circle cx="60" cy="24" r="4.5" fill="#8fc4ff"/>
+</svg>
